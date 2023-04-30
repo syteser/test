@@ -17,6 +17,7 @@ public class Main {
 
         System.out.println(MapMath.getMin(map));
         System.out.println(MapMath.getMax(map));
+        int i = MapMath.getMin(map);
 
     }
 }

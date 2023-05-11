@@ -1,12 +1,13 @@
 package myProject;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Thread.sleep;
 
-public class Main {
-    public static void main(String[] args)  {
+public class Main implements Serializable {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         System.out.println("start....");
 
         Map<Integer, Integer> map = new HashMap<>();
@@ -22,15 +23,35 @@ public class Main {
 //        int i = MapMath.getMin(map);
 
         myTheard mt = new myTheard(10, 5000);
-        myTheard mt2 = new myTheard(2,1515);
+        myTheard mt2 = new myTheard(2, 1515);
+
+        String filePath = "./myProject/ser.ser";
+
+        Animal animal = new Animal(27, "Oleg", 90);
+
+        FileOutputStream fileOutput = new FileOutputStream(filePath);
+        ObjectOutputStream outputStream = new ObjectOutputStream(fileOutput);
+        outputStream.writeObject(animal);
+
+        FileInputStream fiStream = new FileInputStream(filePath);
+        ObjectInputStream objectStream = new ObjectInputStream(fiStream);
+        Object object = objectStream.readObject();
+        Animal animal2 = (Animal) object;
+
+        fiStream.close();
+        objectStream.close();
+
+        System.out.printf("Name - %s, age - %s, weight - %s\n",animal2.getName(), animal2.getAge(), animal2.getWeight());
+        System.out.println(animal2.equals(animal));
+
         mt.start();
         System.out.println("............");
         mt2.start();
     }
 
-    static class myTheard extends Thread{
-        private int i=0;
-        private int sleepTimer=1000;
+    static class myTheard extends Thread {
+        private int i = 0;
+        private int sleepTimer = 1000;
 
         public myTheard(int i, int sleepTimer) {
             this.i = i;
@@ -39,7 +60,7 @@ public class Main {
 
         @Override
         public void run() {
-            while(true){
+            while (true) {
                 System.out.println(i);
                 try {
                     sleep(sleepTimer);

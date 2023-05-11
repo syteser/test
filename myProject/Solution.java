@@ -108,3 +108,14 @@ public class Solution {
 
 }
 */
+
+package myProject;
+
+public class Solution {
+
+        private final int area;
+        public Solution (int area) {
+            this.area = area;
+        }
+    }
+
